@@ -26,8 +26,8 @@ namespace FirecrackerRoulette
         public class Firecracker
         {
             //loading the sounds
-            protected System.Media.SoundPlayer TheExplosion = new System.Media.SoundPlayer(Environment.CurrentDirectory+@"\theExplosion.wav");//the '@' makes the slash be interpreted as a slash instead of the start of a command (e.g. \n , \t)
-            protected System.Media.SoundPlayer NormalFirecracker = new System.Media.SoundPlayer(Environment.CurrentDirectory + @"\normalFirecracker.wav");//otherwise two slashes would be required
+            protected System.Media.SoundPlayer TheExplosion = new System.Media.SoundPlayer(Environment.CurrentDirectory+@"\TheExplosion.wav");//the '@' makes the slash be interpreted as a slash instead of the start of a command (e.g. \n , \t)
+            protected System.Media.SoundPlayer NormalFirecracker = new System.Media.SoundPlayer(Environment.CurrentDirectory + @"\NormalFirecracker.wav");//otherwise two slashes would be required
 
             //properties
             public bool IsDangerous { get; set; }   //if true, is the 'bullet'
