@@ -19,4 +19,31 @@ namespace FirecrackerRoulette
             Application.Run(new Form1());
         }
     }
+
+    public class Roulette
+    {
+
+        public class Firecracker
+        {
+            //loading the sounds
+            System.Media.SoundPlayer theExplosion = new System.Media.SoundPlayer(Environment.CurrentDirectory+@"\theExplosion.wav");//the '@' makes the slash be interpreted as a slash instead of the start of a command (e.g. \n , \t)
+            System.Media.SoundPlayer normalFirecracker = new System.Media.SoundPlayer(Environment.CurrentDirectory + @"\normalFirecracker.wav");//otherwise two slashes would be required
+
+            //properties
+            public bool IsDangerous { get; set; }   //if true, is the 'bullet'
+
+
+
+
+            //methods
+            private void PlaySound(bool explosion)
+            {
+                if (explosion == true)
+                {
+                    
+                }
+            }
+        }
+            
+    }
 }

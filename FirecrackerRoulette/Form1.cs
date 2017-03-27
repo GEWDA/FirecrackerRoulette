@@ -16,5 +16,10 @@ namespace FirecrackerRoulette
         {
             InitializeComponent();
         }
+
+        private Roulette.Firecracker firecracker1 = new Roulette.Firecracker();
+
+
+
     }
 }
