@@ -59,23 +59,5 @@ namespace FirecrackerRoulette {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        internal static System.IO.UnmanagedMemoryStream NormalFirecracker {
-            get {
-                return ResourceManager.GetStream("NormalFirecracker", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        internal static System.IO.UnmanagedMemoryStream TheExplosion {
-            get {
-                return ResourceManager.GetStream("TheExplosion", resourceCulture);
-            }
-        }
     }
 }

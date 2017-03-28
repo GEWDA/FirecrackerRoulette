@@ -16,13 +16,5 @@ namespace FirecrackerRoulette
         {
             InitializeComponent();
         }
-
-        private void randomMethod()
-        {
-             
-        }
-
-
-
     }
 }
