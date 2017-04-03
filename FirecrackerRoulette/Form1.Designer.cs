@@ -36,6 +36,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnGo = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
+            this.btnSpeedUp = new System.Windows.Forms.Button();
+            this.btnAvoid = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // testButton1
@@ -156,6 +158,26 @@
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
+            // btnSpeedUp
+            // 
+            this.btnSpeedUp.Location = new System.Drawing.Point(38, 0);
+            this.btnSpeedUp.Name = "btnSpeedUp";
+            this.btnSpeedUp.Size = new System.Drawing.Size(75, 49);
+            this.btnSpeedUp.TabIndex = 8;
+            this.btnSpeedUp.TabStop = false;
+            this.btnSpeedUp.Text = ">>";
+            this.btnSpeedUp.UseVisualStyleBackColor = true;
+            // 
+            // btnAvoid
+            // 
+            this.btnAvoid.Location = new System.Drawing.Point(119, 0);
+            this.btnAvoid.Name = "btnAvoid";
+            this.btnAvoid.Size = new System.Drawing.Size(75, 49);
+            this.btnAvoid.TabIndex = 9;
+            this.btnAvoid.TabStop = false;
+            this.btnAvoid.Text = "Drop";
+            this.btnAvoid.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -169,8 +191,11 @@
             this.Controls.Add(this.cbxLethal);
             this.Controls.Add(this.testButton2);
             this.Controls.Add(this.testButton1);
+            this.Controls.Add(this.btnSpeedUp);
+            this.Controls.Add(this.btnAvoid);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
         }
@@ -185,6 +210,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnGo;
         private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.Button btnSpeedUp;
+        private System.Windows.Forms.Button btnAvoid;
     }
 }
 

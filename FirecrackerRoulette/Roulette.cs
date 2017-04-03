@@ -10,7 +10,7 @@ using WMPLib;
 
 namespace FirecrackerRoulette
 {
-    internal class Roulette
+    public class Roulette
     {
 
         public class Firecracker
@@ -30,6 +30,13 @@ namespace FirecrackerRoulette
             }
 
 
+            //private WindowsMediaPlayer[] _player = {new WindowsMediaPlayer()};
+
+            //public WindowsMediaPlayer TheSound
+            //{
+            //    get { return _player[0]; }
+            //    set { _player[0] = value; }
+            //}
 
 
 
@@ -58,7 +65,7 @@ namespace FirecrackerRoulette
             {
                 var sound = ChooseSound(explosion)[0];
                 SetVolume(explosion ? EXPLOSION_VOLUME : NORMAL_VOLUME);
-                //                                                          todo:unmute sound here
+                //                                                          
                 sound.controls.play();
             }
 
@@ -80,21 +87,30 @@ namespace FirecrackerRoulette
 
         }//end of Firecracker class
 
-        public Firecracker[] FirecrackersArray = { new Firecracker(), new Firecracker(), new Firecracker(), new Firecracker(), new Firecracker(), new Firecracker() };
+        //properties
+        private Firecracker[] _FirecrackersArray = { new Firecracker() };//needed just so is not null, gets overwritten later
+        public Firecracker[] FirecrackersArray
+        {
+            get { return _FirecrackersArray; }
+            set { _FirecrackersArray = value; }
+        }
 
 
-        //public void GenerateFirecrackers(int size)                      //todo:Replace the above array with this method
-        //{
-        //    Firecracker[] FirecrackerArray = new Firecracker[size];
-        //    for (int i = 0; i<size; i++)
-        //    {
-        //        FirecrackerArray[i] = new Firecracker();
-        //    }
-        //}
+
 
 
 
         //methods
+        public Firecracker[] GenerateFirecrackers(int size)
+        {
+            Firecracker[] LocalFirecrackerArray = new Firecracker[size];
+            for (int i = 0; i < size; i++)
+            {
+                LocalFirecrackerArray[i] = new Firecracker();
+            }
+            return LocalFirecrackerArray;
+        }
+
         private int[] GenerateLethalNumbers(int lethal, int limit)
         {
             int[] theArray = new int[lethal];
@@ -108,8 +124,8 @@ namespace FirecrackerRoulette
 
         private void MakeSomeLethal(int lethal)
         {
-            int[] LethalNumbersArray = GenerateLethalNumbers(lethal,FirecrackersArray.Length) ;
-            foreach (var explosive in LethalNumbersArray)
+            int[] lethalNumbersArray = GenerateLethalNumbers(lethal,FirecrackersArray.Length) ;
+            foreach (var explosive in lethalNumbersArray)
             {
                 FirecrackersArray[explosive].IsDangerous = true;
             }
@@ -119,11 +135,12 @@ namespace FirecrackerRoulette
         /// <summary>
         /// Starts when the player presses go. The actual 'game start' method
         /// </summary>
-        public void LightTheFuses()
+        public void LightTheFuses(int firecrackerValue = 6, int lethalValue = 1 )
         {
             //setup
-            //GenerateFirecrackers(6);
-            MakeSomeLethal(1);//todo: change '1' to a choice by user
+
+            FirecrackersArray = GenerateFirecrackers(Convert.ToInt16(firecrackerValue));
+            MakeSomeLethal(Convert.ToInt16(lethalValue));
             //run
             FusesBurning();
             //potentially high scores next???
