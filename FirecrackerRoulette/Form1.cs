@@ -34,7 +34,29 @@ namespace FirecrackerRoulette
         {
             foreach (Control thing in this.Controls)
             {
-                thing.Visible = thing.Visible != true;
+                //I want to manually be setting visibility of the picture boxes
+                if (!(thing is PictureBox))//can't use != operator to check type, so an extra set of brackets are used
+                {
+                    thing.Visible = thing.Visible != true;
+                }
+                if (thing is PictureBox && thing.Visible==true)
+                {
+                    thing.Visible = false;
+                }
+            }
+        }
+
+        public void ShowFirecrackers(int howMany)
+        {
+            for (int i = 1; i <= howMany; i++)
+            {
+                foreach ( Control picture in this.Controls)
+                {
+                    if (picture.Name =="pictureBox"+i.ToString())
+                    {
+                        picture.Visible = true;
+                    }
+                }
             }
         }
 
@@ -48,6 +70,7 @@ namespace FirecrackerRoulette
         public void btnGo_Click(object sender, EventArgs e)
         {
             InvertControlsVisibility();
+            ShowFirecrackers(cbxFirecrackers.SelectedIndex+1);
             Roulette Game = new Roulette();
             Game.LightTheFuses(cbxFirecrackers.SelectedIndex+1,cbxLethal.SelectedIndex+1);
         }

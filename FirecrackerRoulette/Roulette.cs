@@ -30,12 +30,12 @@ namespace FirecrackerRoulette
             }
 
 
-            //private WindowsMediaPlayer[] _player = {new WindowsMediaPlayer()};
+            //private WindowsMediaPlayer _player = {new WindowsMediaPlayer()};
 
             //public WindowsMediaPlayer TheSound
             //{
-            //    get { return _player[0]; }
-            //    set { _player[0] = value; }
+            //    get { return _player; }
+            //    set { _player = value; }
             //}
 
 
@@ -45,9 +45,8 @@ namespace FirecrackerRoulette
 
 
             //loading the sounds
-            public WindowsMediaPlayer[] ChooseSound(bool explosion = false)
+            public WindowsMediaPlayer ChooseSound(bool explosion = false)
             {
-                WindowsMediaPlayer[] player = new WindowsMediaPlayer[1];
                 WindowsMediaPlayer theSound = new WindowsMediaPlayer();
                 if (explosion)
                 {
@@ -57,15 +56,14 @@ namespace FirecrackerRoulette
                 {
                     theSound.URL = AppDomain.CurrentDomain.BaseDirectory + "NormalFirecracker.wav";
                 }
-                player[0] = theSound;
-                return player;
+                return theSound;
             }
                 
             public void PlaySound(bool explosion = false)
             {
-                var sound = ChooseSound(explosion)[0];
+                var sound = ChooseSound(explosion);
                 SetVolume(explosion ? EXPLOSION_VOLUME : NORMAL_VOLUME);                                                        
-                sound.controls.play();
+                (new Task(() =>sound.controls.play())).RunSynchronously();//run syncronously to avoid sound clipping
             }
 
             [SuppressMessage("ReSharper", "SuggestVarOrType_SimpleTypes")]//because ReSharper doesn't like this method
@@ -140,6 +138,7 @@ namespace FirecrackerRoulette
 
             FirecrackersArray = GenerateFirecrackers(Convert.ToInt16(firecrackerValue));
             MakeSomeLethal(Convert.ToInt16(lethalValue));
+
             //run
             FusesBurning();
             //potentially high scores next???
@@ -148,6 +147,7 @@ namespace FirecrackerRoulette
 
         private void FusesBurning()
         {
+            
             //todo: set up timer based firecracker countdown with button to speed up to next firecracker
         }
 
