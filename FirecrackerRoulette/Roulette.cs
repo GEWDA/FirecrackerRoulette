@@ -64,13 +64,12 @@ namespace FirecrackerRoulette
             public void PlaySound(bool explosion = false)
             {
                 var sound = ChooseSound(explosion)[0];
-                SetVolume(explosion ? EXPLOSION_VOLUME : NORMAL_VOLUME);
-                //                                                          
+                SetVolume(explosion ? EXPLOSION_VOLUME : NORMAL_VOLUME);                                                        
                 sound.controls.play();
             }
 
             [SuppressMessage("ReSharper", "SuggestVarOrType_SimpleTypes")]//because ReSharper doesn't like this method
-            private void SetVolume(int number)
+            private void SetVolume(int number)//unmutes the speakers and sets the volume
             {
                 //installed NuGet AudioSwitcher.AudioApi.CoreAudio 3.0.0.1 for this method
                 CoreAudioDevice speakers = new CoreAudioController().DefaultPlaybackDevice;
@@ -88,7 +87,7 @@ namespace FirecrackerRoulette
         }//end of Firecracker class
 
         //properties
-        private Firecracker[] _FirecrackersArray = { new Firecracker() };//needed just so is not null, gets overwritten later
+        private Firecracker[] _FirecrackersArray = { new Firecracker() };//needed just so it's not null, gets overwritten later
         public Firecracker[] FirecrackersArray
         {
             get { return _FirecrackersArray; }

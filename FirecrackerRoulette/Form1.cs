@@ -59,6 +59,16 @@ namespace FirecrackerRoulette
             btnAvoid.Visible = false;
             cbxLethal.SelectedIndex = 0;
             cbxFirecrackers.SelectedIndex = 5;
+            this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
         }
+
+        private void debuggingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            const int theDebugWidth = 900;
+            const int theNormalWidth = 800;
+            this.Width = this.Width == theDebugWidth ? theNormalWidth : theDebugWidth;
+        }
+
     }
 }
