@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing.Text;
 using System.Linq;
 using System.Media;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using AudioSwitcher.AudioApi.CoreAudio;
 using WMPLib;
 
@@ -15,11 +17,21 @@ namespace FirecrackerRoulette
 
         public class Firecracker
         {
+            public Firecracker()
+            {//I needed to ensure the sound player actually loads when the firecracker is generated, 
+                //otherwise there's a huge lag spike
+                TheSound.URL = AppDomain.CurrentDomain.BaseDirectory + "NormalFirecracker.wav";
 
+                Timer crackerCountdown = new Timer();
+                crackerCountdown.Interval = STATE_CHANGE_TIME;
 
-            //fields and constants
+            }
+
+            
+            //constants
             private const int EXPLOSION_VOLUME = 100;
             private const int NORMAL_VOLUME = 50;
+            private const int STATE_CHANGE_TIME = 3000;
                      
             //properties
             private bool _isDangerous = false;
@@ -30,13 +42,12 @@ namespace FirecrackerRoulette
             }
 
 
-            //private WindowsMediaPlayer _player = {new WindowsMediaPlayer()};
-
-            //public WindowsMediaPlayer TheSound
-            //{
-            //    get { return _player; }
-            //    set { _player = value; }
-            //}
+            private WindowsMediaPlayer _player = new WindowsMediaPlayer();
+                public WindowsMediaPlayer TheSound
+                {
+                    get { return _player; }
+                    set { _player = value; }
+                }
 
 
 
@@ -45,26 +56,26 @@ namespace FirecrackerRoulette
 
 
             //loading the sounds
-            public WindowsMediaPlayer ChooseSound(bool explosion = false)
+            public void ChooseSound()
             {
-                WindowsMediaPlayer theSound = new WindowsMediaPlayer();
-                if (explosion)
+                //WindowsMediaPlayer theSound = new WindowsMediaPlayer();
+                if (IsDangerous)
                 {
-                    theSound.URL = AppDomain.CurrentDomain.BaseDirectory+"TheExplosion.wav";
+                    TheSound.URL = AppDomain.CurrentDomain.BaseDirectory+ "TheExplosion.wav";
                 }
                 else
                 {
-                    theSound.URL = AppDomain.CurrentDomain.BaseDirectory + "NormalFirecracker.wav";
+                    TheSound.URL = AppDomain.CurrentDomain.BaseDirectory + "NormalFirecracker.wav";
                 }
-                return theSound;
             }
                 
-            public void PlaySound(bool explosion = false)
+            public void PlaySound()
             {
-                var sound = ChooseSound(explosion);
-                SetVolume(explosion ? EXPLOSION_VOLUME : NORMAL_VOLUME);                                                        
-                (new Task(() =>sound.controls.play())).RunSynchronously();//run syncronously to avoid sound clipping
-            }
+                
+                ChooseSound();
+                SetVolume(IsDangerous ? EXPLOSION_VOLUME : NORMAL_VOLUME);                                                        
+                (new Task(() =>TheSound.controls.play())).RunSynchronously();//run syncronously to avoid sound clipping
+            }//sound clipping still occasionally happens on my machine, but I suspect this will be solely happening on my machine
 
             [SuppressMessage("ReSharper", "SuggestVarOrType_SimpleTypes")]//because ReSharper doesn't like this method
             private void SetVolume(int number)//unmutes the speakers and sets the volume
@@ -147,6 +158,7 @@ namespace FirecrackerRoulette
 
         private void FusesBurning()
         {
+            //i think the actual visual prompts will have to be on form, as the game can't access the form
             
             //todo: set up timer based firecracker countdown with button to speed up to next firecracker
         }

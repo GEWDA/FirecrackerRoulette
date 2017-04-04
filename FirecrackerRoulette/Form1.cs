@@ -27,7 +27,7 @@ namespace FirecrackerRoulette
             //testing sound
             var testButtons = sender as Button;
             var testFirecracker = new Roulette.Firecracker(){IsDangerous = testButtons.Name == "testButton1"}; //todo: remove test line before final version
-            testFirecracker.PlaySound(testFirecracker.IsDangerous);
+            testFirecracker.PlaySound();
         }
 
         private void InvertControlsVisibility()
