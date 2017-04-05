@@ -4,11 +4,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Drawing.Text;
 using System.Linq;
 using System.Media;
+using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows.Forms;
 using AudioSwitcher.AudioApi.CoreAudio;
 using WMPLib;
+using Timer = System.Timers.Timer;
 
 namespace FirecrackerRoulette
 {
@@ -17,21 +20,36 @@ namespace FirecrackerRoulette
 
         public class Firecracker
         {
-            public Firecracker()
+            private Roulette parent;//this is probably bad practice, passing the entire parent to the child class
+            public Firecracker(Roulette parent)
             {//I needed to ensure the sound player actually loads when the firecracker is generated, 
-                //otherwise there's a huge lag spike
-                TheSound.URL = AppDomain.CurrentDomain.BaseDirectory + "NormalFirecracker.wav";
+                //otherwise there's a huge lag spike upon cracker detonation
+                TheSound.URL = AppDomain.CurrentDomain.BaseDirectory + "";
 
-                Timer crackerCountdown = new Timer();
-                crackerCountdown.Interval = STATE_CHANGE_TIME;
+                 this.parent = parent;//i'm sure i will realize how bad of an idea this is in future
 
+                VolumeModifier = 1;
+            }
+
+            public Firecracker()//necessary due to the FirecrackersArray property in Roulette class, and that can't change
+            {
+                VolumeModifier = 1;
             }
 
             
+            public int ChangeFirecrackerState()
+            {
+                ElapsedEventCounter += 1;
+                return parent.ChangePicture(ElapsedEventCounter,this);
+            }
+
+            //fields
+            public int VolumeModifier;
+
             //constants
             private const int EXPLOSION_VOLUME = 100;
             private const int NORMAL_VOLUME = 50;
-            private const int STATE_CHANGE_TIME = 3000;
+            private const int STATE_CHANGE_TIME = 5000;
                      
             //properties
             private bool _isDangerous = false;
@@ -41,6 +59,7 @@ namespace FirecrackerRoulette
                 set { _isDangerous = value; } //if true, is the 'bullet'
             }
 
+            public int ElapsedEventCounter { get; set; }
 
             private WindowsMediaPlayer _player = new WindowsMediaPlayer();
                 public WindowsMediaPlayer TheSound
@@ -54,11 +73,9 @@ namespace FirecrackerRoulette
             //methods
 
 
-
             //loading the sounds
             public void ChooseSound()
             {
-                //WindowsMediaPlayer theSound = new WindowsMediaPlayer();
                 if (IsDangerous)
                 {
                     TheSound.URL = AppDomain.CurrentDomain.BaseDirectory+ "TheExplosion.wav";
@@ -73,12 +90,12 @@ namespace FirecrackerRoulette
             {
                 
                 ChooseSound();
-                SetVolume(IsDangerous ? EXPLOSION_VOLUME : NORMAL_VOLUME);                                                        
-                (new Task(() =>TheSound.controls.play())).RunSynchronously();//run syncronously to avoid sound clipping
-            }//sound clipping still occasionally happens on my machine, but I suspect this will be solely happening on my machine
+                SetVolume((IsDangerous ? EXPLOSION_VOLUME : NORMAL_VOLUME)/VolumeModifier);                                                        
+                TheSound.controls.play();//run syncronously to make sounds play on load, on top of each other :P
+            }
 
             [SuppressMessage("ReSharper", "SuggestVarOrType_SimpleTypes")]//because ReSharper doesn't like this method
-            private void SetVolume(int number)//unmutes the speakers and sets the volume
+            private void SetVolume(decimal number)//unmutes the speakers and sets the volume
             {
                 //installed NuGet AudioSwitcher.AudioApi.CoreAudio 3.0.0.1 for this method
                 CoreAudioDevice speakers = new CoreAudioController().DefaultPlaybackDevice;
@@ -86,7 +103,7 @@ namespace FirecrackerRoulette
                 {
                     speakers.ToggleMute();
                 }
-                speakers.Volume = number;
+                speakers.Volume = (double) number;//so that's what casting is... handy
             }
 
 
@@ -94,6 +111,15 @@ namespace FirecrackerRoulette
 
 
         }//end of Firecracker class
+
+
+        //fields
+        public int CurrentScore;
+        public int HighScore;
+        public int Wins;
+        public int Losses;
+        public int RemainingThrows;
+        public int changeID;
 
         //properties
         private Firecracker[] _FirecrackersArray = { new Firecracker() };//needed just so it's not null, gets overwritten later
@@ -106,6 +132,7 @@ namespace FirecrackerRoulette
 
 
 
+        
 
 
         //methods
@@ -114,10 +141,26 @@ namespace FirecrackerRoulette
             Firecracker[] LocalFirecrackerArray = new Firecracker[size];
             for (int i = 0; i < size; i++)
             {
-                LocalFirecrackerArray[i] = new Firecracker();
+                LocalFirecrackerArray[i] = new Firecracker(this);
             }
             return LocalFirecrackerArray;
         }
+
+        public int ChangePicture(int eventCounter,Firecracker theSender)
+        {
+            int ID = 0;
+            foreach (var cracker in FirecrackersArray)
+            {
+                if (Equals(cracker, theSender))
+                {
+                    return ID;
+                }
+                ID += 1;
+            }
+            return -1;//will never happen (famous last words...)
+        }
+
+
 
         private int[] GenerateLethalNumbers(int lethal, int limit)
         {
@@ -146,9 +189,13 @@ namespace FirecrackerRoulette
         public void LightTheFuses(int firecrackerValue = 6, int lethalValue = 1 )
         {
             //setup
-
+            RemainingThrows = 1;
             FirecrackersArray = GenerateFirecrackers(Convert.ToInt16(firecrackerValue));
             MakeSomeLethal(Convert.ToInt16(lethalValue));
+            foreach (Firecracker thing in FirecrackersArray)
+            {
+                RemainingThrows += thing.IsDangerous ? 1 : 0;//this means you will always have exactly one spare throw
+            }//this means you can win without getting the high score
 
             //run
             FusesBurning();

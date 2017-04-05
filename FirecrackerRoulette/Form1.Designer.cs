@@ -38,8 +38,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnGo = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
-            this.btnSpeedUp = new System.Windows.Forms.Button();
-            this.btnAvoid = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.debuggingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
@@ -62,6 +60,13 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lblWins = new System.Windows.Forms.Label();
+            this.lblLosses = new System.Windows.Forms.Label();
+            this.lblCurrentScore = new System.Windows.Forms.Label();
+            this.lblHighScore = new System.Windows.Forms.Label();
+            this.lblRemainingThrows = new System.Windows.Forms.Label();
+            this.testButton4 = new System.Windows.Forms.Button();
+            this.testButton3 = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
@@ -203,26 +208,6 @@
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
-            // btnSpeedUp
-            // 
-            this.btnSpeedUp.Location = new System.Drawing.Point(38, 0);
-            this.btnSpeedUp.Name = "btnSpeedUp";
-            this.btnSpeedUp.Size = new System.Drawing.Size(75, 49);
-            this.btnSpeedUp.TabIndex = 8;
-            this.btnSpeedUp.TabStop = false;
-            this.btnSpeedUp.Text = ">>";
-            this.btnSpeedUp.UseVisualStyleBackColor = true;
-            // 
-            // btnAvoid
-            // 
-            this.btnAvoid.Location = new System.Drawing.Point(119, 0);
-            this.btnAvoid.Name = "btnAvoid";
-            this.btnAvoid.Size = new System.Drawing.Size(75, 49);
-            this.btnAvoid.TabIndex = 9;
-            this.btnAvoid.TabStop = false;
-            this.btnAvoid.Text = "Drop";
-            this.btnAvoid.UseVisualStyleBackColor = true;
-            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -248,6 +233,7 @@
             this.pictureBox11.TabIndex = 50;
             this.pictureBox11.TabStop = false;
             this.pictureBox11.Visible = false;
+            this.pictureBox11.Click += new System.EventHandler(this.ThrowingThisOne);
             // 
             // pictureBox12
             // 
@@ -260,6 +246,7 @@
             this.pictureBox12.TabIndex = 49;
             this.pictureBox12.TabStop = false;
             this.pictureBox12.Visible = false;
+            this.pictureBox12.Click += new System.EventHandler(this.ThrowingThisOne);
             // 
             // pictureBox13
             // 
@@ -272,6 +259,7 @@
             this.pictureBox13.TabIndex = 48;
             this.pictureBox13.TabStop = false;
             this.pictureBox13.Visible = false;
+            this.pictureBox13.Click += new System.EventHandler(this.ThrowingThisOne);
             // 
             // pictureBox14
             // 
@@ -284,6 +272,7 @@
             this.pictureBox14.TabIndex = 47;
             this.pictureBox14.TabStop = false;
             this.pictureBox14.Visible = false;
+            this.pictureBox14.Click += new System.EventHandler(this.ThrowingThisOne);
             // 
             // pictureBox15
             // 
@@ -296,6 +285,7 @@
             this.pictureBox15.TabIndex = 46;
             this.pictureBox15.TabStop = false;
             this.pictureBox15.Visible = false;
+            this.pictureBox15.Click += new System.EventHandler(this.ThrowingThisOne);
             // 
             // pictureBox16
             // 
@@ -308,6 +298,7 @@
             this.pictureBox16.TabIndex = 45;
             this.pictureBox16.TabStop = false;
             this.pictureBox16.Visible = false;
+            this.pictureBox16.Click += new System.EventHandler(this.ThrowingThisOne);
             // 
             // pictureBox17
             // 
@@ -320,6 +311,7 @@
             this.pictureBox17.TabIndex = 44;
             this.pictureBox17.TabStop = false;
             this.pictureBox17.Visible = false;
+            this.pictureBox17.Click += new System.EventHandler(this.ThrowingThisOne);
             // 
             // pictureBox18
             // 
@@ -332,6 +324,7 @@
             this.pictureBox18.TabIndex = 43;
             this.pictureBox18.TabStop = false;
             this.pictureBox18.Visible = false;
+            this.pictureBox18.Click += new System.EventHandler(this.ThrowingThisOne);
             // 
             // pictureBox19
             // 
@@ -344,6 +337,7 @@
             this.pictureBox19.TabIndex = 42;
             this.pictureBox19.TabStop = false;
             this.pictureBox19.Visible = false;
+            this.pictureBox19.Click += new System.EventHandler(this.ThrowingThisOne);
             // 
             // pictureBox20
             // 
@@ -356,6 +350,7 @@
             this.pictureBox20.TabIndex = 41;
             this.pictureBox20.TabStop = false;
             this.pictureBox20.Visible = false;
+            this.pictureBox20.Click += new System.EventHandler(this.ThrowingThisOne);
             // 
             // pictureBox10
             // 
@@ -368,6 +363,7 @@
             this.pictureBox10.TabIndex = 40;
             this.pictureBox10.TabStop = false;
             this.pictureBox10.Visible = false;
+            this.pictureBox10.Click += new System.EventHandler(this.ThrowingThisOne);
             // 
             // pictureBox7
             // 
@@ -380,6 +376,7 @@
             this.pictureBox7.TabIndex = 39;
             this.pictureBox7.TabStop = false;
             this.pictureBox7.Visible = false;
+            this.pictureBox7.Click += new System.EventHandler(this.ThrowingThisOne);
             // 
             // pictureBox8
             // 
@@ -392,6 +389,7 @@
             this.pictureBox8.TabIndex = 38;
             this.pictureBox8.TabStop = false;
             this.pictureBox8.Visible = false;
+            this.pictureBox8.Click += new System.EventHandler(this.ThrowingThisOne);
             // 
             // pictureBox9
             // 
@@ -404,6 +402,7 @@
             this.pictureBox9.TabIndex = 37;
             this.pictureBox9.TabStop = false;
             this.pictureBox9.Visible = false;
+            this.pictureBox9.Click += new System.EventHandler(this.ThrowingThisOne);
             // 
             // pictureBox4
             // 
@@ -416,6 +415,7 @@
             this.pictureBox4.TabIndex = 36;
             this.pictureBox4.TabStop = false;
             this.pictureBox4.Visible = false;
+            this.pictureBox4.Click += new System.EventHandler(this.ThrowingThisOne);
             // 
             // pictureBox5
             // 
@@ -428,6 +428,7 @@
             this.pictureBox5.TabIndex = 35;
             this.pictureBox5.TabStop = false;
             this.pictureBox5.Visible = false;
+            this.pictureBox5.Click += new System.EventHandler(this.ThrowingThisOne);
             // 
             // pictureBox6
             // 
@@ -440,6 +441,7 @@
             this.pictureBox6.TabIndex = 34;
             this.pictureBox6.TabStop = false;
             this.pictureBox6.Visible = false;
+            this.pictureBox6.Click += new System.EventHandler(this.ThrowingThisOne);
             // 
             // pictureBox3
             // 
@@ -452,6 +454,7 @@
             this.pictureBox3.TabIndex = 33;
             this.pictureBox3.TabStop = false;
             this.pictureBox3.Visible = false;
+            this.pictureBox3.Click += new System.EventHandler(this.ThrowingThisOne);
             // 
             // pictureBox2
             // 
@@ -464,6 +467,7 @@
             this.pictureBox2.TabIndex = 32;
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Visible = false;
+            this.pictureBox2.Click += new System.EventHandler(this.ThrowingThisOne);
             // 
             // pictureBox1
             // 
@@ -476,6 +480,68 @@
             this.pictureBox1.TabIndex = 31;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Visible = false;
+            this.pictureBox1.Click += new System.EventHandler(this.ThrowingThisOne);
+            // 
+            // lblWins
+            // 
+            this.lblWins.Location = new System.Drawing.Point(42, 86);
+            this.lblWins.Name = "lblWins";
+            this.lblWins.Size = new System.Drawing.Size(100, 23);
+            this.lblWins.TabIndex = 51;
+            this.lblWins.Text = "Survivors:  ";
+            // 
+            // lblLosses
+            // 
+            this.lblLosses.Location = new System.Drawing.Point(42, 109);
+            this.lblLosses.Name = "lblLosses";
+            this.lblLosses.Size = new System.Drawing.Size(100, 23);
+            this.lblLosses.TabIndex = 52;
+            this.lblLosses.Text = "Deaths:  ";
+            // 
+            // lblCurrentScore
+            // 
+            this.lblCurrentScore.Location = new System.Drawing.Point(152, 86);
+            this.lblCurrentScore.Name = "lblCurrentScore";
+            this.lblCurrentScore.Size = new System.Drawing.Size(100, 23);
+            this.lblCurrentScore.TabIndex = 53;
+            this.lblCurrentScore.Text = "Score:  ";
+            // 
+            // lblHighScore
+            // 
+            this.lblHighScore.Location = new System.Drawing.Point(152, 109);
+            this.lblHighScore.Name = "lblHighScore";
+            this.lblHighScore.Size = new System.Drawing.Size(100, 23);
+            this.lblHighScore.TabIndex = 54;
+            this.lblHighScore.Text = "High Score:  ";
+            // 
+            // lblRemainingThrows
+            // 
+            this.lblRemainingThrows.Font = new System.Drawing.Font("Microsoft Sans Serif", 18.25F);
+            this.lblRemainingThrows.Location = new System.Drawing.Point(249, 86);
+            this.lblRemainingThrows.Name = "lblRemainingThrows";
+            this.lblRemainingThrows.Size = new System.Drawing.Size(279, 46);
+            this.lblRemainingThrows.TabIndex = 55;
+            this.lblRemainingThrows.Text = "Remaining Throws:  ";
+            // 
+            // testButton4
+            // 
+            this.testButton4.Location = new System.Drawing.Point(799, 154);
+            this.testButton4.Name = "testButton4";
+            this.testButton4.Size = new System.Drawing.Size(75, 39);
+            this.testButton4.TabIndex = 56;
+            this.testButton4.Text = "Firecracker Thrown";
+            this.testButton4.UseVisualStyleBackColor = true;
+            this.testButton4.Click += new System.EventHandler(this.testButtons_Click);
+            // 
+            // testButton3
+            // 
+            this.testButton3.Location = new System.Drawing.Point(799, 109);
+            this.testButton3.Name = "testButton3";
+            this.testButton3.Size = new System.Drawing.Size(75, 39);
+            this.testButton3.TabIndex = 57;
+            this.testButton3.Text = "Explosion Thrown";
+            this.testButton3.UseVisualStyleBackColor = true;
+            this.testButton3.Click += new System.EventHandler(this.testButtons_Click);
             // 
             // Form1
             // 
@@ -484,6 +550,13 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(784, 561);
             this.ContextMenuStrip = this.contextMenuStrip1;
+            this.Controls.Add(this.testButton3);
+            this.Controls.Add(this.testButton4);
+            this.Controls.Add(this.lblRemainingThrows);
+            this.Controls.Add(this.lblHighScore);
+            this.Controls.Add(this.lblCurrentScore);
+            this.Controls.Add(this.lblLosses);
+            this.Controls.Add(this.lblWins);
             this.Controls.Add(this.pictureBox11);
             this.Controls.Add(this.pictureBox12);
             this.Controls.Add(this.pictureBox13);
@@ -512,8 +585,6 @@
             this.Controls.Add(this.cbxLethal);
             this.Controls.Add(this.testButton2);
             this.Controls.Add(this.testButton1);
-            this.Controls.Add(this.btnSpeedUp);
-            this.Controls.Add(this.btnAvoid);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -552,8 +623,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnGo;
         private System.Windows.Forms.Button btnReset;
-        private System.Windows.Forms.Button btnSpeedUp;
-        private System.Windows.Forms.Button btnAvoid;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem debuggingToolStripMenuItem;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -576,6 +645,13 @@
         private System.Windows.Forms.PictureBox pictureBox18;
         private System.Windows.Forms.PictureBox pictureBox19;
         private System.Windows.Forms.PictureBox pictureBox20;
+        private System.Windows.Forms.Label lblWins;
+        private System.Windows.Forms.Label lblLosses;
+        private System.Windows.Forms.Label lblCurrentScore;
+        private System.Windows.Forms.Label lblHighScore;
+        private System.Windows.Forms.Label lblRemainingThrows;
+        private System.Windows.Forms.Button testButton4;
+        private System.Windows.Forms.Button testButton3;
     }
 }
 
