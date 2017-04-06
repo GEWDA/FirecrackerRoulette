@@ -49,7 +49,7 @@ namespace FirecrackerRoulette
             //constants
             private const int EXPLOSION_VOLUME = 100;
             private const int NORMAL_VOLUME = 50;
-            private const int STATE_CHANGE_TIME = 5000;
+            public int STATE_CHANGE_TIME = 5000;
                      
             //properties
             private bool _isDangerous = false;
@@ -90,8 +90,8 @@ namespace FirecrackerRoulette
             {
                 
                 ChooseSound();
-                SetVolume((IsDangerous ? EXPLOSION_VOLUME : NORMAL_VOLUME)/VolumeModifier);                                                        
-                TheSound.controls.play();//run syncronously to make sounds play on load, on top of each other :P
+                SetVolume((IsDangerous ? EXPLOSION_VOLUME : NORMAL_VOLUME)/VolumeModifier);
+                (new Task(() => TheSound.controls.play())).RunSynchronously();//run syncronously
             }
 
             [SuppressMessage("ReSharper", "SuggestVarOrType_SimpleTypes")]//because ReSharper doesn't like this method
@@ -120,6 +120,7 @@ namespace FirecrackerRoulette
         public int Losses;
         public int RemainingThrows;
         public int changeID;
+        public bool hasLost;
 
         //properties
         private Firecracker[] _FirecrackersArray = { new Firecracker() };//needed just so it's not null, gets overwritten later

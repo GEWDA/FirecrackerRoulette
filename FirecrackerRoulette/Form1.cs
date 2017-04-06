@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Timers;
@@ -74,7 +75,6 @@ namespace FirecrackerRoulette
 
         public void ChangeImage(object source, ElapsedEventArgs e)
         {
-            
             foreach (var cracker in Game.FirecrackersArray)
             {
                 var ID = cracker.ChangeFirecrackerState();
@@ -98,52 +98,95 @@ namespace FirecrackerRoulette
                                     if (Game.FirecrackersArray[ID].VolumeModifier==5)
                                     {
                                         Game.CurrentScore += 1;
-                                        lblCurrentScore.Text = lblCurrentScore.Text.Substring(0, 8) + Game.CurrentScore;
                                     }
                                     else
                                     {
-                                        Lose();
+                                        Game.hasLost = true;
+                                        GameOver();
                                     }
                                 }
                                 break;
-                            default:
-                                try { picture.Visible = false; } //once ElapsedEventCounter reaches 4 (i.e. it has exploded), stop loading it
-                                catch { }//todo: remove the underlying problem (messy multi-threading)
+                            default://needed, due to timer reset
                                 break;
                         }
                     
                     }
                 }
-                //todo: add some non-click-stopping 2 second delay here
+                Thread.Sleep(3000);//due to the multithreading, just using sleep does not stop user input
+
             }
+            UpdateLabels();//triggers per firecracker exploding
+            if (Game.FirecrackersArray[Game.FirecrackersArray.Length - 1].ElapsedEventCounter == 4 && !Game.hasLost)//if the last cracker has exploded...
+            {
+                GameOver(true);//...you win
+                //todo: agressively stop all threads that reach here
+            }
+        }
 
+        private void UpdateLabels(bool all = false)
+        {
 
+            LabelInvokerMethod(lblCurrentScore,Game.CurrentScore);
+            if (all)
+            {
+                LabelInvokerMethod(lblHighScore,Game.HighScore);
+                LabelInvokerMethod(lblLosses,Game.Losses);
+                LabelInvokerMethod(lblWins,Game.Wins);
+            }
+            
+        }
 
+        void LabelInvokerMethod(Control label,int value = 0)
+        {
+            //string text = "";
+            if (label.InvokeRequired)
+            {
+                label.Invoke(new MethodInvoker(delegate
+                {
+                    label.Text = label.Text.Substring(0, label.Text.Length - (value > 10 ? 2 : 1))+value.ToString();
+                }));
+                return;
+            }
+            MessageBox.Show("This code should be unreachable/nLine 146 Form1");
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
+            GC.Collect();//apparently this is a terrible idea, but i need to get rid of the timer
             InvertControlsVisibility();
             cbxLethal.SelectedIndex = 0;
             cbxFirecrackers.SelectedIndex = 5;
+            
         }
 
-        private void Lose()
+        private void GameOver(bool won = false)
         {
             Game.HighScore = Game.CurrentScore > Game.HighScore ? Game.CurrentScore : Game.HighScore;
-            MessageBox.Show("You have perished");
-            btnReset_Click(this,new EventArgs());
+            if (won)
+            {
+                MessageBox.Show("You have survived");
+                Game.Wins += 1;
+            }
+            else
+            {
+                MessageBox.Show("You have perished");
+                Game.Losses += 1;
+            }
+            UpdateLabels(true);
+            btnReset.Invoke(new MethodInvoker(delegate { btnReset.PerformClick(); }));//multithreading error avoidance
         }
 
         public void btnGo_Click(object sender, EventArgs e)
         {
             InvertControlsVisibility();
             lblCurrentScore.Text = "Score:  0";
+            lblRemainingThrows.Text = "Remaining Throws:  0";
+            Game.hasLost = false;
             ShowFirecrackers(cbxFirecrackers.SelectedIndex+1);
             Timer crackerCountdown = new Timer();
 
-            crackerCountdown.Interval = 5000;
-
+            crackerCountdown.Interval = Game.FirecrackersArray[0].STATE_CHANGE_TIME;//FirecrackersArray[0] always exists so I
+            //                                                                      often use it to pass generic unchanging data
             crackerCountdown.Elapsed += ChangeImage;
 
             crackerCountdown.Enabled = true;
@@ -179,12 +222,13 @@ namespace FirecrackerRoulette
             }
             isItLethal.BorderStyle = BorderStyle.Fixed3D;//you can see which ones you have thrown
             int index=Convert.ToInt16(isItLethal.Name.Substring(10))-1;//takes the 'pictureBox' out of 'pitureBox1', and then adjusts it to reflect the correct index
-            if (Game.FirecrackersArray[index].IsDangerous)
+            if (Game.FirecrackersArray[index].VolumeModifier==5)
             {
-                Game.CurrentScore += 1;
+                return;//if they have already thrown, nothing happens
             }
             Game.FirecrackersArray[index].VolumeModifier = 5;//sound only reduces if they had a throw
             Game.RemainingThrows -= 1;
+            lblRemainingThrows.Text = lblRemainingThrows.Text.Substring(0, 18) + Game.RemainingThrows.ToString();//shouldn't this crash it?
         }
 
         
