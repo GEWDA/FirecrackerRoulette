@@ -107,14 +107,18 @@ namespace FirecrackerRoulette
                                 }
                                 break;
                             default://needed, due to timer reset
+                                if (!Game.hasWon)//now you can only win once per reset
+                                {
                                     cbxFirecrackers.Invoke(new MethodInvoker(delegate
                                     {
                                         Game.hasWon = ID == cbxFirecrackers.SelectedIndex;
                                     }));
-                                if (Game.hasWon)
-                                {
-                                    GameOver(true);
+                                    if (Game.hasWon)
+                                    {
+                                        GameOver(true);
+                                    }
                                 }
+                                    
                                 break;
                         }
                     
@@ -194,6 +198,7 @@ namespace FirecrackerRoulette
             lblCurrentScore.Text = "Score:  0";
             lblRemainingThrows.Text = "Remaining Throws:  0";
             Game.hasLost = false;
+            Game.hasWon = false;
             ShowFirecrackers(cbxFirecrackers.SelectedIndex+1);
             Timer crackerCountdown = new Timer();
 
