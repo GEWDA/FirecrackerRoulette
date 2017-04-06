@@ -107,6 +107,14 @@ namespace FirecrackerRoulette
                                 }
                                 break;
                             default://needed, due to timer reset
+                                    cbxFirecrackers.Invoke(new MethodInvoker(delegate
+                                    {
+                                        Game.hasWon = ID == cbxFirecrackers.SelectedIndex;
+                                    }));
+                                if (Game.hasWon)
+                                {
+                                    GameOver(true);
+                                }
                                 break;
                         }
                     
@@ -116,11 +124,11 @@ namespace FirecrackerRoulette
 
             }
             UpdateLabels();//triggers per firecracker exploding
-            if (Game.FirecrackersArray[Game.FirecrackersArray.Length - 1].ElapsedEventCounter == 4 && !Game.hasLost)//if the last cracker has exploded...
-            {
-                GameOver(true);//...you win
-                //todo: agressively stop all threads that reach here
-            }
+            //if (Game.FirecrackersArray[Game.FirecrackersArray.Length - 1].ElapsedEventCounter == 4 && !Game.hasLost)//if the last cracker has exploded...
+            //{
+            //    GameOver(true);//...you win
+            //    //todo: agressively stop all threads that reach here
+            //}
         }
 
         private void UpdateLabels(bool all = false)
@@ -156,6 +164,10 @@ namespace FirecrackerRoulette
             InvertControlsVisibility();
             cbxLethal.SelectedIndex = 0;
             cbxFirecrackers.SelectedIndex = 5;
+            foreach (var cracker in Game.FirecrackersArray)
+            {
+                cracker.ElapsedEventCounter = 0;
+            }
             
         }
 
@@ -191,6 +203,7 @@ namespace FirecrackerRoulette
 
             crackerCountdown.Enabled = true;
             Game.LightTheFuses(cbxFirecrackers.SelectedIndex+1,cbxLethal.SelectedIndex+1);
+            lblRemainingThrows.Text="Remaining Throws:  "+Game.RemainingThrows.ToString();
         }
 
         public void Form1_Load(object sender, EventArgs e)

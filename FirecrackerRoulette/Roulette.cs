@@ -29,11 +29,13 @@ namespace FirecrackerRoulette
                  this.parent = parent;//i'm sure i will realize how bad of an idea this is in future
 
                 VolumeModifier = 1;
+                ElapsedEventCounter = 0;
             }
 
             public Firecracker()//necessary due to the FirecrackersArray property in Roulette class, and that can't change
             {
                 VolumeModifier = 1;
+                ElapsedEventCounter = 0;
             }
 
             
@@ -121,6 +123,7 @@ namespace FirecrackerRoulette
         public int RemainingThrows;
         public int changeID;
         public bool hasLost;
+        public bool hasWon;
 
         //properties
         private Firecracker[] _FirecrackersArray = { new Firecracker() };//needed just so it's not null, gets overwritten later
