@@ -99,7 +99,7 @@ namespace FirecrackerRoulette
                                     {
                                         Game.CurrentScore += 1;
                                     }
-                                    else
+                                    else if(!Game.hasLost)//now you can only lose once per reset
                                     {
                                         Game.hasLost = true;
                                         GameOver();
@@ -107,8 +107,8 @@ namespace FirecrackerRoulette
                                 }
                                 break;
                             default://needed, due to timer reset
-                                if (!Game.hasWon)//now you can only win once per reset
-                                {
+                                if (!Game.hasWon && !Game.hasLost)//now you can only win once per reset, 
+                                {//                                 and only if you haven't lost this reset
                                     cbxFirecrackers.Invoke(new MethodInvoker(delegate
                                     {
                                         Game.hasWon = ID == cbxFirecrackers.SelectedIndex;
@@ -156,6 +156,7 @@ namespace FirecrackerRoulette
                 label.Invoke(new MethodInvoker(delegate
                 {
                     label.Text = label.Text.Substring(0, label.Text.Length - (value > 10 ? 2 : 1))+value.ToString();
+                    label.Update();
                 }));
                 return;
             }

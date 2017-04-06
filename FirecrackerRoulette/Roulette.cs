@@ -91,9 +91,10 @@ namespace FirecrackerRoulette
             public void PlaySound()
             {
                 
-                ChooseSound();
+                
                 SetVolume((IsDangerous ? EXPLOSION_VOLUME : NORMAL_VOLUME)/VolumeModifier);
-                (new Task(() => TheSound.controls.play())).RunSynchronously();//run syncronously
+                ChooseSound();//turns out selecting a sound plays it, if it is different from the currently selected sound
+                //(new Task(() => TheSound.controls.play())).RunSynchronously();//run syncronously
             }
 
             [SuppressMessage("ReSharper", "SuggestVarOrType_SimpleTypes")]//because ReSharper doesn't like this method
