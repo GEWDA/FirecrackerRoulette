@@ -17,18 +17,18 @@ namespace FirecrackerRoulette
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)//this is a pretty simple form
         {
-            Second();
+            Second();//it literally displays a message, opens another form, and closes itself
         }
 
         public Form1 myForm = new Form1();
 
         public void Second()
         {
-            this.Hide();
-            myForm.ShowDialog();
-            this.Close();
+            this.Hide();//hides the form without actually closing it
+            myForm.ShowDialog();//opens the other form
+            this.Close();//note the form can only be closed AFTER the other form is opened
 
         }
     }

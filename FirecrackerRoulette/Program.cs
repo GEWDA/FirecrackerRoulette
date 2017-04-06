@@ -19,8 +19,8 @@ namespace FirecrackerRoulette
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form2());
-        }
+            Application.Run(new Form2());//form 2 instead of form 1, as the main method glitched out and was causing errors for no reason
+        }//                             this gave me a great opportunity for a welcome message though
 
 
     }
