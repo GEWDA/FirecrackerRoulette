@@ -24,7 +24,7 @@ namespace FirecrackerRoulette
             public Firecracker(Roulette parent)
             {//I needed to ensure the sound player actually loads when the firecracker is generated, 
                 //otherwise there's a huge lag spike upon cracker detonation
-                TheSound.URL = AppDomain.CurrentDomain.BaseDirectory + "";
+                TheSound.URL = AppDomain.CurrentDomain.BaseDirectory + "LitFuseLong.wav";
 
                  this.parent = parent;//i'm sure i will realize how bad of an idea this is in future
 
@@ -94,7 +94,6 @@ namespace FirecrackerRoulette
                 
                 SetVolume((IsDangerous ? EXPLOSION_VOLUME : NORMAL_VOLUME)/VolumeModifier);
                 ChooseSound();//turns out selecting a sound plays it, if it is different from the currently selected sound
-                //(new Task(() => TheSound.controls.play())).RunSynchronously();//run syncronously
             }
 
             [SuppressMessage("ReSharper", "SuggestVarOrType_SimpleTypes")]//because ReSharper doesn't like this method
